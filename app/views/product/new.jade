@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    .row
+        .well.span4
+            h3 Add a product Unit
+                form(action=path.pathFor('product.create'), method='post', autocomplete='on')
+                    input(name='name', placeholder='Product Name', type='text')
+                    input(name='description', placeholder='Product Description', type='text')
+                    input(name='price', placeholder='Unit Price', type='number')
+                    input(name='pCount', placeholder='Pallete Count', type='number')      
+                    input(name='cCount', placeholder='Crate Count', type='number')      
+                    input(name='bCount', placeholder='Box Count', type='number')        
+                    p: button#submit.btn.btn-success(type='submit', data-loading-text='Saving...') Save

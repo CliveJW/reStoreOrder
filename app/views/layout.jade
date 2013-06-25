@@ -1,0 +1,25 @@
+doctype 5
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    -var title = titleHelper(title)
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(href='/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/css/bootstrap-responsive.min.css', rel='stylesheet')
+    link(href='/css/custom_style.css', rel='stylesheet')
+    //if lt IE 9
+      script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
+    != css('site')
+  body(id="#{view}_view")
+
+    .container
+      div.wrapper
+        h1 Re-Store-Order
+        a.btn(href=path.pathFor('index'))
+            i.icon-home
+            |  Home
+        P
+        block content
+    block js
+      != js('site')

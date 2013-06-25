@@ -1,0 +1,21 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "~3.1.0",
+    "jade": "*",
+    "stylus": "*",
+    "coffee-script": "~1.5.0",
+    "underscore": "~1.4.1",
+    "underscore.string": "~2.3.0",
+    "connect-assets": "~2.3.3"
+  },
+  "devDependencies": {
+    "node-dev": "~0.2.8",
+    "mocha": "~1.8.1",
+    "should": "~1.2.0",
+    "npmedge": "~0.1.1",
+    "superagent": "~0.12.4"
+  }
+}
