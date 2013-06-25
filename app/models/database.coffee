@@ -2,7 +2,7 @@ Schema = require('jugglingdb').Schema
 
 connection = {}
 connection.database = 're-store-order'
-connection.host = '192.168.1.254'
+connection.host = 'mooch.activedns.co.za'
 connection.safe = true # turn fire-and-forget off (mongodb)
 
 console.log 'connecting to mongo', connection.database
