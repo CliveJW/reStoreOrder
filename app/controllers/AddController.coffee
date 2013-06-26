@@ -1,4 +1,5 @@
 ProductModel = require('../models/product_model')
+OrderModel = require('../models/order_model')
 ya = require('ya-csv')
 module.exports = (app) ->
   {pathFor} = app.locals.path
@@ -7,9 +8,26 @@ module.exports = (app) ->
     @index = (req, res) ->
       res.render 'product', title: 'Product Index', view: 'product'
 
+
     @new = (req, res) ->
-      res.render 'product/new', title: 'New Product', view: 'Products new'
-      
+      order = new OrderModel
+      item = {number: 123, thing: 'sda'}
+      order.items.push item
+      order.items.push item
+      order.items.push item
+      order.items.push item
+      order.items.push item
+      order.order_id = 12123
+      order.account = 2323
+      order.client = '34234'
+      order.save (err) ->
+        console.log err
+        thing = OrderModel.all {
+          where:
+            order_id: 12123
+        }, (err, data) ->
+              console.log thing
+              res.render 'product/new', title: 'New Product', view: 'Products new'
     @create = (req, res) ->
       prod = req.body
       product = new ProductModel

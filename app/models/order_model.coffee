@@ -15,8 +15,6 @@ OrderSchema = database 'orders', RECORD_VERSION,
 	order_id: Number
 	account: Number
 	client: String
-	items: [
-		
-	]
+	items: []
 
 module.exports = OrderSchema

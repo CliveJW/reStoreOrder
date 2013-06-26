@@ -2,13 +2,13 @@ extends ../layout
 
 block content
   .row
-    .well.span3
+    .well
       ul.unstyled
       p
-        a.btn.btn-primary(href=path.pathFor('product.new'))
+        a.btn.btn-xlarge(href=path.pathFor('product.new'))
           i.icon-user.icon-white
           |  New Product
       p
-        a.btn.btn-primary(href=path.pathFor('product.import'))
-          i.icon-chevron-left.icon-white
+        a.btn.btn-xlarge(href=path.pathFor('product.import'))
+          i.icon-chevron-left.icon-black
           |  Import
