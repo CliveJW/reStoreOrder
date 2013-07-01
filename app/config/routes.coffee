@@ -3,6 +3,7 @@ module.exports = (app) ->
   {OrderController} = app.locals
   {pathRaw} = app.locals.path
   {pathFor} = app.locals.path
+  
   app.get pathRaw('index'), (req, res) ->
     res.render 'index', view: 'index'
 

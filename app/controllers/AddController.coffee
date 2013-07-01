@@ -10,18 +10,7 @@ module.exports = (app) ->
 
 
     @new = (req, res) ->
-      order = new OrderModel
-      item = {number: 123, thing: 'sda'}
-      order.items.push item
-      order.items.push item
-      order.items.push item
-      order.items.push item
-      order.items.push item
-      order.order_id = 12123
-      order.account = 2323
-      order.client = '34234'
-      order.save (err) ->
-          res.render 'product/new', title: 'New Product', view: 'Products new'
+      res.render 'product/new', title: 'New Product', view: 'Products new'
 
     @create = (req, res) ->
       prod = req.body
