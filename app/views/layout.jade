@@ -1,5 +1,5 @@
 doctype 5
-html(lang='en')
+html(lang='en', ng-app='reStoreOrder')
   head
     meta(charset='utf-8')
     -var title = titleHelper(title)
@@ -12,14 +12,24 @@ html(lang='en')
       script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
     != css('site')
   body(id="#{view}_view")
-
+    
     .container
       div.wrapper
         h1 Re-Store-Order
-        a.btn(href=path.pathFor('index'))
+        a.btn.btn-primary(href=path.pathFor('index'))
             i.icon-home
             |  Home
-        P
+        a.btn.btn-primary(href=path.pathFor('product.index'))
+            i.icon-plus-sign.icon-black
+            |  Products
+        a.btn.btn-primary(href=path.pathFor('order.index'))
+            i.icon-pencil.icon-black
+            |  Orders
+        a.btn.btn-primary(href=path.pathFor('product.new'))
+            i.icon-user.icon-black
+            |  Clients
+        hr
         block content
     block js
       != js('site')
+script(src='/scripts/angular.min.js')

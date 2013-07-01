@@ -5,10 +5,14 @@ block content
     .well
       ul.unstyled
       p
-        a.btn.btn-xlarge(href=path.pathFor('product.new'))
-          i.icon-user.icon-white
+        a.btn.btn-primary(href=path.pathFor('product.new'))
+          i.icon-user.icon-black
           |  New Product
       p
-        a.btn.btn-xlarge(href=path.pathFor('product.import'))
+        a.btn.btn-primary(href=path.pathFor('product.import'))
           i.icon-chevron-left.icon-black
           |  Import
+      p
+        a.btn.btn-primary(href=path.pathFor('product.list'))
+          i.icon-chevron-left.icon-black
+          |  List All

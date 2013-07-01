@@ -7,11 +7,12 @@ RECORD_VERSION = 1
 #
 #
 #
+mongoose = require('mongoose');
+textSearch = require('mongoose-text-search')
+Schema = mongoose.Schema
+ObjectId = Schema.ObjectId;
 
-database = require('./database').versioned
-
-
-ProductSchema = database 'products', RECORD_VERSION,
+ProductSchema = new Schema
   material_num: Number
   name: String
   category: String
@@ -26,5 +27,9 @@ ProductSchema = database 'products', RECORD_VERSION,
   pack_count: Number
   pack_cost: Number
   unit_size: String
+  words: []
 
-module.exports = ProductSchema
+ProductSchema.plugin(textSearch)
+ProductSchema.index { words: 'text' }
+
+module.exports = mongoose.model 'Product', ProductSchema

@@ -8,13 +8,14 @@ RECORD_VERSION = 1
 #
 #
 
-database = require('./database').versioned
+mongoose = require('mongoose');
+Schema = mongoose.Schema
+ObjectId = Schema.ObjectId;
 
-
-OrderSchema = database 'orders', RECORD_VERSION,
+OrderSchema = new Schema
 	order_id: Number
 	account: Number
 	client: String
 	items: []
 
-module.exports = OrderSchema
+module.exports = mongoose.model 'Order', OrderSchema

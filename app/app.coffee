@@ -1,5 +1,6 @@
 express = require 'express'
 http = require 'http'
+mongoose = require 'mongoose'
 app = express()
 
 PORT = 8000
@@ -39,5 +40,5 @@ http.createServer(app).listen app.get('port'), ->
   port = app.get 'port'
   env = app.settings.env
   console.log "listening on port #{port} in #{env} mode"
-
+mongoose.connect 'mongodb://192.168.1.254/re-store-order'
 module.exports = app

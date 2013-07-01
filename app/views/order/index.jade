@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    div(ng-controller="OrderController")
+        .row
+            .well
+                button.btn-primary(ng-click="startOrder()")
+                    | New
+                button.btn-primary
+                    | Previous
+
+                div.search(ng-show='showSearch')
+                    | Search:
+                    input.sort(ng-model='query') 
+
+                    ul.products
+                        li.line(ng-repeat='product in searchData | filter:query | orderBy:orderProp')
+                            p.productListItem {{product.description}}
+                            buton.btn-danger(ng-click="addItem(product.material_num)", value="product.material_num") 
+                                | Add Item {{product.material_num}}
+
+                div.panel(ng-show='showOrderPanel')
+

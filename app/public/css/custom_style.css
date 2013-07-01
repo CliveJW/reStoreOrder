@@ -1,3 +1,43 @@
+body {
+	background: url(../img/grad_1.jpg) no-repeat center center fixed; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+
 .container {
+	width: 90%;
 	float: center;
+}
+
+.btn-primary {
+	margin-bottom: 10px;
+	margin-right: 5px;
+}
+
+h1 {
+	   -webkit-text-stroke: 1px white;
+	   color: red;
+}
+
+.well {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.line {
+	color: black;
+	font-weight: bold;
+
+}
+
+.productListItem {
+	background-color: white
+}
+
+.search, .sort {
+	color: black;
+	margin-right: 5px;
+	margin-left: 1px;
+	margin-bottom: 5px;
 }
