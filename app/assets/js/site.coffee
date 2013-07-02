@@ -11,13 +11,16 @@ $ ->
 
 
         angularModule.controller 'OrderController', ($scope) -> 
+            
             $.get(
 
                     "/products/search/"
 
                 ).success( 
                     (data) ->
-                        $scope.searchData = data
+                        $scope.searchData = []
+                        $scope.searchDataCopy = data
+                        console.log data
                 ).error(
                     ->
                 )
@@ -26,18 +29,72 @@ $ ->
             $scope.showOrderPanel = null
             
             $scope.startOrder = ->
+                
                 $.get(
                         "/order/init"
+
                     ).success(
-                        (data) ->
-                            console.log data
+
+                        (order) ->
+
+                            $scope.order = order
+
                     ).error(
+
                         ->
                     )
 
                 $scope.showSearch = 'true'
                 $scope.showOrderPanel = 'true'
+                $scope.orderItems = []
 
             $scope.addItem = (item) ->
+                OrderItem = {product: 0, unit: "", count: 0, name: "", price: 0}
                 console.log "Adding Item"
+                for i in $scope.searchData
+                    if i.material_num == item
+                        OrderItem.product = i.material_num
+                        OrderItem.unit = $scope.unit_select
+                        OrderItem.count = $scope.unit_count
+                        OrderItem.name = i.description
+                        switch OrderItem.unit
+                            when 'pallete'
+                                OrderItem.price = i.pallete_cost * OrderItem.count
+                            when 'case'
+                                OrderItem.price = i.case_cost * OrderItem.count
+                            when 'pack'
+                                OrderItem.price = i.pack_cost * OrderItem.count
+
+                        $scope.orderItems.push OrderItem
+                        break
+
+                $scope.totalCost = 0
+                for c in $scope.orderItems
+                    $scope.totalCost = $scope.totalCost + c.price
+                $scope.order.items.push OrderItem
+                console.log $scope.order
                 console.log item
+
+            $scope.$watch "query", (value)  ->
+                if value?
+                    switch value.length
+                        when 0
+                            $scope.searchData = []
+                        when 1
+                            $scope.searchData = $scope.searchDataCopy
+
+            $scope.$watch "unitTypeSelect", (value)  ->
+                if value?
+                    $scope.unit_select = value
+                    console.log value               
+
+            $scope.$watch "unitCount", (value)  ->
+                if value?
+                    $scope.unit_count = value
+                    console.log value  
+
+            $scope.setItemNumber = (value) ->
+                $scope.itemNumber = value
+                console.log value
+                        
+

@@ -2,22 +2,60 @@ extends ../layout
 
 block content
     div(ng-controller="OrderController")
-        .row
-            .well
-                button.btn-primary(ng-click="startOrder()")
-                    | New
-                button.btn-primary
-                    | Previous
 
-                div.search(ng-show='showSearch')
+            button.btn-primary(ng-click="startOrder()")
+                | New
+            button.btn-primary
+                | Previous
+
+            div.search.well
+
+                div.search(ng-show='showSearch', ng-model='search')
                     | Search:
                     input.sort(ng-model='query') 
 
-                    ul.products
-                        li.line(ng-repeat='product in searchData | filter:query | orderBy:orderProp')
-                            p.productListItem {{product.description}}
-                            buton.btn-danger(ng-click="addItem(product.material_num)", value="product.material_num") 
-                                | Add Item {{product.material_num}}
+                    table.products.table-striped.table-hover
+                        thead
+                            tr
+                                th Item
+                        tbody
+                            tr.line(ng-repeat='product in searchData | filter:query | orderBy:orderProp')
+                                td.productListItem {{product.description}}
+                                    td 
+                                        buton.btn(href='#productUnitModal', role='button', data-toggle='modal', ng-click="setItemNumber(product.material_num)") 
+                                            | Add Item
 
-                div.panel(ng-show='showOrderPanel')
+            div.panel(ng-show='showSearch').well
+                h2 Order {{$scope.order.id}}
+                table.table.table-hover
+                    thead
+                        tr
+                            th Product
+                            th Unit
+                            th Count
+                            th Price
+                    tbody
+                        tr.item(ng-repeat='item in orderItems')
+                            td(data-title="Product") {{item.name}}
+                            td(data-title="Unit") {{item.unit}}
+                            td(data-title="Count") {{item.count}}
+                            td(data-title="Price") {{item.price}}
+                p.totalPrice Total Due: {{totalCost}}
+                button.btn-danger
+                    | Complete Order
+
+            #productUnitModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='productUnitModal', aria-hidden='true')
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h3 Select Unit and Count
+                .modal-body
+                    p Add:
+                    input(name='count', placeholder='Number of Unit', type='number', ng-model="unitCount")
+                    p of type:
+                    select(ng-model="unitTypeSelect")
+                        option(value="pallete", ng-model="unitType") Pallete
+                        option(value="case", ng-model="unitType") Case
+                        option(value="pack", ng-model="unitType") Pack
+                .modal-footer
+                    button.btn(data-dismiss='modal', aria-hidden='true', ng-click="addItem(itemNumber)") Proceed
 
