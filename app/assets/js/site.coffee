@@ -77,24 +77,35 @@ $ ->
 
             $scope.$watch "query", (value)  ->
                 if value?
-                    switch value.length
-                        when 0
-                            $scope.searchData = []
-                        when 1
-                            $scope.searchData = $scope.searchDataCopy
+                    if value.length < 3
+                        $scope.searchData = []
+                    else
+                        $.get(
+
+                            "/products/search/" + value
+
+                        ).success( 
+                            (data) ->
+                                $scope.searchData = data
+                                $scope.$apply()
+                                console.log data
+                        ).error(
+                            (err) ->
+                                console.log err
+                        )
 
             $scope.$watch "unitTypeSelect", (value)  ->
                 if value?
                     $scope.unit_select = value
-                    console.log value               
+                    console.log value
 
             $scope.$watch "unitCount", (value)  ->
                 if value?
                     $scope.unit_count = value
-                    console.log value  
+                    console.log value
 
             $scope.setItemNumber = (value) ->
                 $scope.itemNumber = value
                 console.log value
-                        
+
 

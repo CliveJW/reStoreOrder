@@ -8,8 +8,10 @@ module.exports = (app) ->
         @index = (req, res) ->
             res.render 'order/index'
         
-        app.get '/products/search/', (req, res) ->
-            ProductModel.find (err, products) ->
+        app.get '/products/search/:query', (req, res) ->
+            console.log req.params
+            ProductModel.find {words: new RegExp(req.params.query, 'i')}, (err, products) ->
+                console.log err
                 res.send products
 
         app.get '/order/init', (req, res) ->

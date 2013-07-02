@@ -1,4 +1,13 @@
-## Re-Store-Order
+# Re-Store-Order
+This is a basic ordering system that can import clients and products from CSV.
+
+Orders are placed per client and products are selected and once finished an order can be mailed to suppliers, the client or whoever you want.
+
+Written in coffee using the Frappe framework (NodeJS).
+
+# NOTE
+
+This software while free is written for my father and his business. Certain aspects of this app are customized to suite their expectations and as such will NOT fit yours. Don't complain. :-)
 
 ### Setup
 	DEPS:

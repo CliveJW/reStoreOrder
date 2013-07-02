@@ -19,7 +19,7 @@ block content
                             tr
                                 th Item
                         tbody
-                            tr.line(ng-repeat='product in searchData | filter:query | orderBy:orderProp')
+                            tr.line(ng-repeat='product in searchData')
                                 td.productListItem {{product.description}}
                                     td 
                                         buton.btn(href='#productUnitModal', role='button', data-toggle='modal', ng-click="setItemNumber(product.material_num)") 
