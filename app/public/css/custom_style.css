@@ -1,9 +1,9 @@
 body {
-	background: url(../img/grad_1.jpg) no-repeat center center fixed; 
-  	-webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-  	background-size: cover;
+	background: url(../img/grad_1.jpg)  no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover
 }
 
 .container {
@@ -22,17 +22,18 @@ h1 {
 }
 
 .well {
-	background-color: rgba(0, 0, 0, 0.0);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
-.line {
+/*.line {
 	color: black;
 	font-weight: bold;
 
 }
-
+*/
 .productListItem {
-	background-color: white
+	/*background-color: white*/
+	color: white;
 }
 
 .search, .sort {
@@ -52,3 +53,13 @@ h1 {
 	width: auto;
 }*/
 
+h2 {
+	color: white;
+}
+
+th {
+	color: white;
+}
+
+td {
+	color: white;
