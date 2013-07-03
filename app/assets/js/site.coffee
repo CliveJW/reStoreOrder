@@ -132,9 +132,32 @@ $ ->
 
                     console.log value
 
+
+            $scope.$watch "clients", (value)  ->
+
+                if value?
+
+                    $scope.clientName = value
+
+                    console.log value
+                    console.log 'meh'
+
             $scope.setItemNumber = (value) ->
 
                 $scope.itemNumber = value
                 
                 console.log value
 
+            $scope.dropOrder = ->
+
+                $.get(
+
+                    "/order/drop/" + $scope.clientName.name
+
+                ).success( 
+                    (data) ->
+                        $scope.$apply()
+                ).error(
+                    (err) ->
+                        console.log err
+                )

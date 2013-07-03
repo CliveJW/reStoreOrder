@@ -12,8 +12,8 @@ block content
 
                 div.client(ng-show='showSearch', ng-model='client')
                     | Acc Holder:
-                    select
-                        option(ng-repeat='client in clientList', value="{{client.acc}}") {{client.name}}
+                    select(ng-options="client as client.name for client in clientList", ng-model="clients") {{client}}
+                        //-option(ng-repeat='client in clientList', value="{{client.acc}}") {{client.name}}
                 div.search(ng-show='showSearch', ng-model='search')
                     | Search:
                     input.sort(ng-model='query') 
@@ -45,7 +45,7 @@ block content
                             td(data-title="Count") {{item.count}}
                             td(data-title="Price") {{item.price}}
                 p.totalPrice Total Due: {{totalCost}}
-                button.btn-danger
+                button.btn-danger(ng-click="dropOrder()")
                     | Complete Order
 
             #productUnitModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='productUnitModal', aria-hidden='true')
