@@ -1,6 +1,7 @@
 module.exports = (app) ->
   {AddController} = app.locals
   {OrderController} = app.locals
+  {ClientController} = app.locals
   {pathRaw} = app.locals.path
   {pathFor} = app.locals.path
   

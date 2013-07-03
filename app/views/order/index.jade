@@ -10,10 +10,14 @@ block content
 
             div.search.well
 
+                div.client(ng-show='showSearch', ng-model='client')
+                    | Acc Holder:
+                    select
+                        option(ng-repeat='client in clientList', value="{{client.acc}}") {{client.name}}
                 div.search(ng-show='showSearch', ng-model='search')
                     | Search:
                     input.sort(ng-model='query') 
-
+                    
                     table.products
                         thead
                             tr
