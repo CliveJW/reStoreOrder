@@ -11,20 +11,8 @@ $ ->
 
 
         angularModule.controller 'OrderController', ($scope) -> 
-            
-            $.get(
-
-                    "/products/search/"
-
-                ).success( 
-                    (data) ->
-                        $scope.searchData = []
-                        $scope.searchDataCopy = data
-                        console.log data
-                ).error(
-                    ->
-                )
-            
+            $("#discountSet").val 0
+            console.log $("#discountSet").val
             $scope.showSearch = null
             $scope.showOrderPanel = null
             
@@ -63,9 +51,7 @@ $ ->
 
             $scope.addItem = (item) ->
 
-                OrderItem = {product: 0, unit: "", count: 0, name: "", price: 0}
-
-                console.log "Adding Item"
+                OrderItem = {product: 0, unit: "", count: 0, name: "", price: 0, discount: 0.0}
 
                 for i in $scope.searchData
 
@@ -76,13 +62,23 @@ $ ->
                         OrderItem.count = $scope.unit_count
                         OrderItem.name = i.description
 
+                        OrderItem.discount = $scope.discount
+
                         switch OrderItem.unit
                             when 'pallete'
-                                OrderItem.price = i.pallete_cost * OrderItem.count
+                                if OrderItem.discount == 0.0
+                                    OrderItem.price = (i.pallete_cost * OrderItem.count)
+                                    console.log OrderItem.discount / 10
+                                else 
+                                    OrderItem.price = (i.pallete_cost * OrderItem.count) * (OrderItem.discount / 10)
+                                    console.log OrderItem.discount / 10
+                                    
                             when 'case'
                                 OrderItem.price = i.case_cost * OrderItem.count
                             when 'pack'
                                 OrderItem.price = i.pack_cost * OrderItem.count
+
+                        
 
                         $scope.orderItems.push OrderItem
 
@@ -129,6 +125,15 @@ $ ->
                 if value?
 
                     $scope.unit_count = value
+
+                    console.log value
+
+
+            $scope.$watch "discount", (value)  ->
+
+                if value?
+
+                    $scope.discount = value
 
                     console.log value
 
