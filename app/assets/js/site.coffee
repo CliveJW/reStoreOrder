@@ -11,7 +11,7 @@ $ ->
 
 
         angularModule.controller 'OrderController', ($scope) -> 
-            $("#discountSet").val 0
+            $("#discountSet").val "0"
             console.log $("#discountSet").val
             $scope.showSearch = null
             $scope.showOrderPanel = null
@@ -24,8 +24,9 @@ $ ->
                     ).success(
 
                         (order) ->
-
+                            order.order_id = order._id
                             $scope.order = order
+
 
                     ).error(
 
@@ -51,7 +52,7 @@ $ ->
 
             $scope.addItem = (item) ->
 
-                OrderItem = {product: 0, unit: "", count: 0, name: "", price: 0, discount: 0.0}
+                OrderItem = {product: 0, unit: "", count: 0, name: "", price: 0, discount: 0}
 
                 for i in $scope.searchData
 
@@ -63,21 +64,25 @@ $ ->
                         OrderItem.name = i.description
 
                         OrderItem.discount = $scope.discount
-
+                        disMins = (OrderItem.discount / 100)
+                        console.log disMins
                         switch OrderItem.unit
                             when 'pallete'
-                                if OrderItem.discount == 0.0
-                                    OrderItem.price = (i.pallete_cost * OrderItem.count)
-                                    console.log OrderItem.discount / 10
-                                else 
-                                    OrderItem.price = (i.pallete_cost * OrderItem.count) * (OrderItem.discount / 10)
-                                    console.log OrderItem.discount / 10
-                                    
-                            when 'case'
-                                OrderItem.price = i.case_cost * OrderItem.count
-                            when 'pack'
-                                OrderItem.price = i.pack_cost * OrderItem.count
+                                if OrderItem.discount > 0
 
+                                    OrderItem.price = $scope.normalize((i.pallete_cost * OrderItem.count) - ((OrderItem.discount / 100) * (i.pallete_cost * OrderItem.count)))
+                                else 
+                                    OrderItem.price = $scope.normalize(i.pallete_cost * OrderItem.count)
+                            when 'case'
+                                if OrderItem.discount > 0
+                                    OrderItem.price = $scope.normalize((i.case_cost * OrderItem.count) - ((OrderItem.discount / 100) * (i.case_cost * OrderItem.count)))
+                                else 
+                                    OrderItem.price = $scope.normalize(i.case_cost * OrderItem.count)
+                            when 'pack'
+                                if OrderItem.discount > 0
+                                    OrderItem.price = $scope.normalize((i.pack_cost * OrderItem.count) - ((OrderItem.discount / 100) * (i.pack_cost * OrderItem.count)))
+                                else 
+                                    OrderItem.price = $scope.normalize(i.pack_cost * OrderItem.count)
                         
 
                         $scope.orderItems.push OrderItem
@@ -89,6 +94,16 @@ $ ->
                 for c in $scope.orderItems
                     $scope.totalCost = $scope.totalCost + c.price
                 $scope.order.items.push OrderItem
+                console.log $scope.order
+
+                $.post(
+                    "/order/saveOrder", $scope.order
+                ).success(
+                    (data) ->
+                ).error(
+                    (err) ->
+                )
+
 
             $scope.$watch "query", (value)  ->
 
@@ -129,7 +144,7 @@ $ ->
                     console.log value
 
 
-            $scope.$watch "discount", (value)  ->
+            $scope.$watch "discountModel", (value)  ->
 
                 if value?
 
@@ -150,7 +165,11 @@ $ ->
             $scope.setItemNumber = (value) ->
 
                 $scope.itemNumber = value
-                
+
+                $scope.discountModel = 0
+
+                $scope.unitCount = 0
+
                 console.log value
 
             $scope.dropOrder = ->
@@ -166,3 +185,7 @@ $ ->
                     (err) ->
                         console.log err
                 )
+
+            $scope.normalize = (num) ->
+                return (Math.floor(( num )*100))/100
+

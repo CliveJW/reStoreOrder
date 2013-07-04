@@ -32,17 +32,28 @@ module.exports = (app) ->
 
         app.get '/order/init', (req, res) ->
             order = new OrderModel
-            order.save (err, result) ->
+            order.create (err, result) ->
                 res.send result
                 console.log err
 
-        app.get '/order/drop/:name', (req, res) ->
+        app.post '/order/saveOrder', (res, req) ->
+            console.log res.body
+            OrderModel.find {order_id: res.body.order_id}, (err, order) ->
+                order.account = "testnutts"
+                order.client = "dsdvv"
+                order.items = res.body.items
+
+                order.save (result) ->
+                    console.log result
+
+
+        app.get '/order/drop/:orderID', (req, res) ->
             console.log req.params
             doc = new PDFDocument
             doc.info['Title'] = 'Test'
             doc.info['Author'] = "Alan Watts - with re-store-order"
 
-            doc.text 'This is a simple tokenSecret'
+            doc.text 'Order'
             doc.write 'THING.pdf'
 
             dbClient = new Dropbox.Client(

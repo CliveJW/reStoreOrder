@@ -30,7 +30,7 @@ block content
                                             | Add Item
 
             div.panel(ng-show='showSearch').well
-                h2 Order :: {{order._id}}
+                h2 Order :: {{order.order_id}}
                 table.table.table-hover
                     thead
                         tr
@@ -56,14 +56,14 @@ block content
                     h3 Select Unit and Count
                 .modal-body
                     p Add:
-                    input.unitCount(name='count', placeholder='Number of Unit', type='number', ng-model="unitCount")
+                    input#unitCount(type='number', ng-model="unitCount", step="any", value="0")
                     p of type:
                     select.unitSelect(ng-model="unitTypeSelect")
                         option(value="pallete", ng-model="unitType") Pallete
                         option(value="case", ng-model="unitType") Case
                         option(value="pack", ng-model="unitType", selected) Pack
                     p with Discount
-                    input.discountSet(type="number", step="0.1", min="0", max="100", ng-model="discount", value="0")
+                    input#discountSet(type="number", step="any", value="0", ng-model="discountModel")
                 .modal-footer
                     button.btn(data-dismiss='modal', aria-hidden='true', ng-click="addItem(itemNumber)") Proceed
 
