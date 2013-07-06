@@ -24,6 +24,7 @@ $ ->
                     ).success(
 
                         (order) ->
+                            console.log order
                             order.order_id = order._id
                             $scope.order = order
 
@@ -97,7 +98,7 @@ $ ->
                 console.log $scope.order
 
                 $.post(
-                    "/order/saveOrder", $scope.order
+                    '/order/saveOrder', $scope.order
                 ).success(
                     (data) ->
                 ).error(

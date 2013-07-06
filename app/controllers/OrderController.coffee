@@ -32,16 +32,20 @@ module.exports = (app) ->
 
         app.get '/order/init', (req, res) ->
             order = new OrderModel
-            order.create (err, result) ->
+            order.order_id = order._id
+            order.save (err, result) ->
                 res.send result
                 console.log err
+                console.log result
 
-        app.post '/order/saveOrder', (res, req) ->
-            console.log res.body
-            OrderModel.find {order_id: res.body.order_id}, (err, order) ->
+        app.post '/order/saveOrder', (req, res) ->
+            console.log '___---___--->>>', req.body.order_id
+
+            OrderModel.findOne {order_id: req.body.order_id}, (err, order) ->
+                console.log order
                 order.account = "testnutts"
                 order.client = "dsdvv"
-                order.items = res.body.items
+                order.items = req.body.items
 
                 order.save (result) ->
                     console.log result

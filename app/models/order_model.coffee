@@ -13,9 +13,15 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId;
 
 OrderSchema = new Schema
-	order_id: Number
-	account: Number
-	client: String
+	order_id: 
+		type: String
+		default: ''
+	account: 
+		type: String
+		default: ''
+	client: 
+		type: String
+		default: ''
 	items: []
 
 module.exports = mongoose.model 'Order', OrderSchema
