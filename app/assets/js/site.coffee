@@ -2,7 +2,6 @@
 #= require vendor/bootstrap.js
 #= require_tree shared
 
-
 $ -> 
 
         angularModule = angular.module 'reStoreOrder', []

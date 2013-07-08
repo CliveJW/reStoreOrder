@@ -10,18 +10,20 @@ module.exports = (app) ->
 
        
         
-        tok = {dboxT: '', dboxS: ''}
-        client = new Dropbox.Client(
-                key: "7uir6n2ds0k58gq"
-                secret: "h518ydj517kmpul"
-        )
-        authDriver = new Dropbox.Drivers.NodeServer(8191)
+        # tok = {dboxT: '', dboxS: ''}
+        # client = new Dropbox.Client(
+        #         key: "7uir6n2ds0k58gq"
+        #         secret: "h518ydj517kmpul"
+        # )
+        # authDriver = new Dropbox.Drivers.NodeServer(8191)
 
-        client.authDriver authDriver
+        # client.authDriver authDriver
 
-        client.authenticate (error, client) ->
-            tok.dboxT = client.oauth.token
-            tok.dboxS = client.oauth.tokenSecret
+        # client.authenticate (error, client) ->
+        #     console.log client.oauth.token
+        #     console.log client.oauth.tokenSecret
+        #     tok.dboxT = client.oauth.token
+        #     tok.dboxS = client.oauth.tokenSecret
 
         @index = (req, res) ->
             res.render 'order/index'
@@ -66,26 +68,31 @@ module.exports = (app) ->
                 key: '7uir6n2ds0k58gq'
                 secret: 'h518ydj517kmpul'
                 sandbox: false
-                token: tok.dboxT
-                tokenSecret: tok.dboxS
+                token: 'zt7x36ky0xbh1wnp'
+                tokenSecret: '90a5if2jza6ls5p'
             )
+            d = new Date()
+            curr_date = d.getDate()
+            curr_month = d.getMonth() + 1 #Months are zero based
+            curr_year = d.getFullYear()
             doc = new PDFDocument
             doc.info['Title'] = 'Test'
             doc.info['Author'] = "Alan Watts - with re-store-order"
-
-            doc.text 'Order :: ' + order.order_num
-            doc.down
+            doc.text 'Order: ' + order.order_num 
+            doc.text order.client.name 
             doc.text "Account: " + order.client.acc
-            doc.text order.client.name
-            doc.text " "
+            doc.text "Date: ( " + curr_date + "-" + curr_month + "-" + curr_year + " )"
+
+            doc.text "Contact: " + order.client.contact1
+            doc.text "Number: " + order.client.contact1_mobile_phone
+            doc.text ""
+            doc.text ""
 
             for item in order.items
-                doc.text (item.name + " X " + item.count + " " + item.unit + "(s) with " + item.discount  + "% discount @ R" + item.price)
-                doc.down
-                doc.down
+                doc.text item.name 
+                doc.text "      x " + item.count + " " + item.unit + "(s) with " + item.discount  + "% discount @ R" + item.price
                 doc.text " "
-                doc.text " "
-                doc.text " "
+            doc.text " "
             doc.text "Total: " + order.total
             doc.write path, (err) ->
 
@@ -96,7 +103,7 @@ module.exports = (app) ->
                   # No encoding passed, readFile produces a Buffer instance
                     console.log error
                 
-                    client.writeFile "/apps/re-store-order/"+path, data, (error, stat) ->
+                    dbClient.writeFile "/apps/re-store-order/"+path, data, (error, stat) ->
                         res.redirect '/'
 
 

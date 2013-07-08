@@ -3,6 +3,8 @@ extends ../layout
 block content
     div(ng-controller="OrderController")
 
+        .fluid-row
+
             button.btn-primary(ng-click="startOrder()")
                 | New
             button.btn-primary(value="Page", href="/orders/previous/", onclick="location.href='/order/previous';")
@@ -11,12 +13,11 @@ block content
             div.search.well
 
                 div.client(ng-show='showSearch', ng-model='client')
-                    | Acc Holder:
+                    p.accc Acc Holder:
                     select(ng-options="client as client.name for client in clientList", ng-model="clients") {{client}}
                         //-option(ng-repeat='client in clientList', value="{{client.acc}}") {{client.name}}
-                div.search(ng-show='showSearch', ng-model='search')
-                    | Search:
-                    input.sort(ng-model='query') 
+                    p.ser Search:
+                    input.sort(ng-model='query', onclick="this.value = ''; $scope.searchData = [];") 
                     
                     table.products
                         thead
