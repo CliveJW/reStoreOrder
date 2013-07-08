@@ -2,6 +2,7 @@ module.exports = (app) ->
   {AddController} = app.locals
   {OrderController} = app.locals
   {ClientController} = app.locals
+  {PrevOrderController} = app.locals
   {pathRaw} = app.locals.path
   {pathFor} = app.locals.path
   
@@ -14,4 +15,3 @@ module.exports = (app) ->
   app.get pathRaw('product.import'), AddController.import
   app.get pathRaw('product.list'), AddController.list
   app.get pathRaw('order.index'), OrderController.index
-  

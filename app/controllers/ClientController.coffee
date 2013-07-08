@@ -41,5 +41,5 @@ module.exports = (app) ->
                     res.send 'Import Complere'
 
         app.get '/client/list', (req, res) ->
-            ClientModel.find {}, 'name', {sort: {name: 'asc'}}, (err, posts) ->
+            ClientModel.find (err, posts) ->
                 res.send posts

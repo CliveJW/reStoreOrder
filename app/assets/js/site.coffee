@@ -24,14 +24,14 @@ $ ->
                     ).success(
 
                         (order) ->
-                            console.log order
-                            order.order_id = order._id
                             $scope.order = order
-
+                            order.order_id = order._id
+                            $scope.order_num = order.order_num
+                            $scope.$apply()
 
                     ).error(
 
-                        ->
+                        (err) ->
                     )
 
                 $.get(
@@ -41,15 +41,17 @@ $ ->
                 ).success( 
                     (data) ->
                         $scope.clientList = data
+                        $scope.showSearch = 'true'
+                        $scope.showOrderPanel = 'true'
+                        $scope.orderItems = []
                         $scope.$apply()
                 ).error(
                     (err) ->
                         console.log err
                 )
 
-                $scope.showSearch = 'true'
-                $scope.showOrderPanel = 'true'
-                $scope.orderItems = []
+
+
 
             $scope.addItem = (item) ->
 
@@ -93,10 +95,10 @@ $ ->
                 $scope.totalCost = 0
 
                 for c in $scope.orderItems
-                    $scope.totalCost = $scope.totalCost + c.price
+                    $scope.totalCost = $scope.normalize($scope.totalCost + c.price)
                 $scope.order.items.push OrderItem
                 console.log $scope.order
-
+                $scope.order.total = $scope.totalCost
                 $.post(
                     '/order/saveOrder', $scope.order
                 ).success(
@@ -159,7 +161,7 @@ $ ->
                 if value?
 
                     $scope.clientName = value
-
+                    $scope.order.client = value
                     console.log value
                     console.log 'meh'
 
@@ -175,9 +177,9 @@ $ ->
 
             $scope.dropOrder = ->
 
-                $.get(
+                $.post(
 
-                    "/order/drop/" + $scope.clientName.name
+                    "/order/drop", $scope.order
 
                 ).success( 
                     (data) ->
@@ -190,3 +192,33 @@ $ ->
             $scope.normalize = (num) ->
                 return (Math.floor(( num )*100))/100
 
+
+        angularModule.controller 'PrevOrderController', ($scope) -> 
+
+            $.get(
+
+                    "/client/list"
+
+                ).success( 
+                    (data) ->
+                        $scope.clientList = data
+                        $scope.showSearch = 'true'
+                        $scope.showOrderPanel = 'true'
+                        $scope.orderItems = []
+                        $scope.$apply()
+                ).error(
+                    (err) ->
+                        console.log err
+                )
+
+            $scope.$watch "prevAcc", (value)  ->
+                if value?
+                    $.get(
+                        "/client/orders/" + value.acc
+                    ).success(
+                        (data) ->
+                            $scope.orders = data
+                    ).error(
+                        (err) ->
+                    )
+                    console.log value.acc

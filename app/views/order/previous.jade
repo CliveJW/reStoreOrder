@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    div(ng-controller="PrevOrderController").well
+
+            .fluid-row
+                p.acc Account:
+                select(ng-options="client as client.name for client in clientList", ng-model="prevAcc", value="{{client.acc}}")
+                   
+                p.acc Order:
+                select(ng-options="order as order.acc for order in orders", ng-model="prevOrder")
+
+
+            h2 Order :: {{order_num}}
+            table.table.table-hover
+                thead
+                    tr
+                        th Product
+                        th Unit
+                        th Count
+                        th Dicsount
+                        th Price
+                tbody
+                    tr.item(ng-repeat='item in orderItems')
+                        td(data-title="Product") {{item.name}}
+                        td(data-title="Unit") {{item.unit}}
+                        td(data-title="Count") {{item.count}}
+                        td(data-title="Count") {{item.discount}}
+                        td(data-title="Price") {{item.price}}
+            p.totalPrice Total Due: {{totalCost}}
+                
+
+

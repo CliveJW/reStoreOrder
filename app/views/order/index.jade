@@ -5,7 +5,7 @@ block content
 
             button.btn-primary(ng-click="startOrder()")
                 | New
-            button.btn-primary
+            button.btn-primary(value="Page", href="/orders/previous/", onclick="location.href='/order/previous';")
                 | Previous
 
             div.search.well
@@ -30,7 +30,7 @@ block content
                                             | Add Item
 
             div.panel(ng-show='showSearch').well
-                h2 Order :: {{order.order_id}}
+                h2 Order :: {{order_num}}
                 table.table.table-hover
                     thead
                         tr

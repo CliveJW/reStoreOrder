@@ -6,7 +6,9 @@ PDFDocument = require 'pdfkit'
 file = require 'fs'
 module.exports = (app) ->
 
-    class OrderController 
+    class OrderController
+
+       
         
         tok = {dboxT: '', dboxS: ''}
         client = new Dropbox.Client(
@@ -31,15 +33,20 @@ module.exports = (app) ->
                 res.send products
 
         app.get '/order/init', (req, res) ->
+
             order = new OrderModel
             order.order_id = order._id
-            order.save (err, result) ->
-                res.send result
-                console.log err
-                console.log result
+            OrderModel.find {}, "order_num", 
+                sort:
+                    order_num: -1
+            , (err, orders) ->
+                order.order_num = orders[0].order_num + 1
+                order.save (err, result) ->
+                    res.send result
+                    console.log err
+                    console.log result
 
         app.post '/order/saveOrder', (req, res) ->
-            console.log '___---___--->>>', req.body.order_id
 
             OrderModel.findOne {order_id: req.body.order_id}, (err, order) ->
                 console.log order
@@ -51,34 +58,48 @@ module.exports = (app) ->
                     console.log result
 
 
-        app.get '/order/drop/:orderID', (req, res) ->
-            console.log req.params
-            doc = new PDFDocument
-            doc.info['Title'] = 'Test'
-            doc.info['Author'] = "Alan Watts - with re-store-order"
-
-            doc.text 'Order'
-            doc.write 'THING.pdf'
-
+        app.post '/order/drop', (req, res) ->
+            console.log req.body
+            order = req.body
+            path = (order.client.name.replace RegExp(" ", "g"), "_")+'.pdf'
+            console.log path
             dbClient = new Dropbox.Client(
-
                 key: '7uir6n2ds0k58gq'
                 secret: 'h518ydj517kmpul'
                 sandbox: false
                 token: tok.dboxT
                 tokenSecret: tok.dboxS
             )
+            doc = new PDFDocument
+            doc.info['Title'] = 'Test'
+            doc.info['Author'] = "Alan Watts - with re-store-order"
 
-            file.readFile "/home/dev/docs/THING.pdf", (error, data) ->
-  
-              # No encoding passed, readFile produces a Buffer instance
-                console.log error if error
-            
-                client.writeFile "/apps/re-store-order/" + req.params.name, data, (error, stat) ->
-                    console.log error  if error else res.send stat
+            doc.text 'Order' + order.order_num
+            doc.down
+            doc.text " "
+            doc.text " "
+            doc.text " "
+
+            for item in order.items
+                doc.text (item.name + " X " + item.count + " " + item.unit + "(s) with " + item.discount  + "% discount @ R" + item.price)
+                doc.down
+                doc.down
+                doc.text " "
+                doc.text " "
+                doc.text " "
+                doc.text "         " + order.total
+            doc.write path, (err) ->
+
+               
+
+                file.readFile path, (error, data) ->
+      
+                  # No encoding passed, readFile produces a Buffer instance
+                    console.log error
+                
+                    client.writeFile "/apps/re-store-order/"+path, data, (error, stat) ->
+                        res.redirect '/'
 
 
-
-
-# The image has been succesfully written.
-
+        app.get '/order/previous', (req, res) ->
+            res.render 'order/previous' 
