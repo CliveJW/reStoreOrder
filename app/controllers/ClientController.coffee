@@ -5,7 +5,7 @@ module.exports = (app) ->
 
     class ClientController 
         app.get '/client/import', (req, res) ->
-              reader = ya.createCsvFileReader("/home/clivew/client_list.csv",
+              reader = ya.createCsvFileReader("client_list.csv",
                 separator: "\,"
                 quote: "\""
                 escape: "\""
