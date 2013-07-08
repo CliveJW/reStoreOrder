@@ -14,11 +14,11 @@ ObjectId = Schema.ObjectId;
 
 OrderSchema = new Schema
 	total:
-		type: Number
-		default: 0
+		type: String
+		default: ''
 	order_num:
 		type: Number
-		default: 0
+		default: 1
 	order_id: 
 		type: String
 		default: ''

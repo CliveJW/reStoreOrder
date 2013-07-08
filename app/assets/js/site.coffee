@@ -97,7 +97,6 @@ $ ->
                 for c in $scope.orderItems
                     $scope.totalCost = $scope.normalize($scope.totalCost + c.price)
                 $scope.order.items.push OrderItem
-                console.log $scope.order
                 $scope.order.total = $scope.totalCost
                 $.post(
                     '/order/saveOrder', $scope.order
@@ -206,6 +205,7 @@ $ ->
                         $scope.showOrderPanel = 'true'
                         $scope.orderItems = []
                         $scope.$apply()
+                        console.log data
                 ).error(
                     (err) ->
                         console.log err
@@ -217,8 +217,23 @@ $ ->
                         "/client/orders/" + value.acc
                     ).success(
                         (data) ->
-                            $scope.orders = data
+                            $scope.ordersNums = data
+                            console.log data
+                            $scope.$apply()
                     ).error(
                         (err) ->
                     )
                     console.log value.acc
+
+            $scope.$watch "prevOrder", (value)  ->
+                if value?
+                    $.get(
+                        "/order/previous/select/" + value.order_num
+                    ).success(
+                        (data) ->
+                            $scope.orderItems = data.items
+                            console.log data
+                            $scope.$apply()
+                    ).error(
+                        (err) ->
+                    )

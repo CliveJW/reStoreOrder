@@ -25,7 +25,7 @@ module.exports = (app) ->
         res.render 'product/new', title: 'New Product', view: 'Products new'
 
     @import = (req, res) ->
-      reader = ya.createCsvFileReader("/home/dev/projects/frep-test/app/list.csv",
+      reader = ya.createCsvFileReader("main_prod_list.csv",
         separator: "\:"
         quote: "\""
         escape: "\""
@@ -38,13 +38,13 @@ module.exports = (app) ->
         product.material_num = data[0]
         product.sub_category = data[13]
         product.description = data[1].reduceWhiteSpace()
-        product.unit_price = data[3].replace("r ", "").replace ",", ""
-        product.pallete_count = data[10]
-        product.pallete_cost = data[6].replace("r ", "").replace ",", ""
+        product.unit_price = data[3].replace("R ", "")
+        product.pallete_count = data[9]
+        product.pallete_cost = data[6].replace("R ", "")
         product.case_count = data[8]
-        product.case_cost = data[5].replace("r ", "").replace ",", ""
+        product.case_cost = data[5].replace("R ", "")
         product.pack_count = data[7]
-        product.pack_cost = data[4].replace("r ", "").replace ",", ""
+        product.pack_cost = data[4].replace("R ", "")
         product.unit_size = data[2]
         words_init = data[1].split " "
         words = []
@@ -55,7 +55,6 @@ module.exports = (app) ->
         product.words = words
         console.log product
         product.save (err) ->
-          res.render 'index', view: 'index'
 
     @list = (req, res) ->
       ProductModel.find (err, products) -> 

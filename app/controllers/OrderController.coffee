@@ -40,29 +40,28 @@ module.exports = (app) ->
                 sort:
                     order_num: -1
             , (err, orders) ->
-                order.order_num = orders[0].order_num + 1
+                if orders[0]?
+                    order.order_num = orders[0].order_num + 1
+                else
+                    order.order_num = 1
                 order.save (err, result) ->
                     res.send result
-                    console.log err
-                    console.log result
 
         app.post '/order/saveOrder', (req, res) ->
 
             OrderModel.findOne {order_id: req.body.order_id}, (err, order) ->
-                console.log order
-                order.account = "testnutts"
-                order.client = "dsdvv"
+                console.log req.body
+                order.account = req.body.client.acc
+                order.client = req.body.client.name
                 order.items = req.body.items
 
                 order.save (result) ->
-                    console.log result
 
 
         app.post '/order/drop', (req, res) ->
-            console.log req.body
             order = req.body
-            path = (order.client.name.replace RegExp(" ", "g"), "_")+'.pdf'
-            console.log path
+            console.log order
+            path = "orders/" + (order.client.name.replace RegExp(" ", "g"), "_")+"_"+order.order_num + '.pdf'
             dbClient = new Dropbox.Client(
                 key: '7uir6n2ds0k58gq'
                 secret: 'h518ydj517kmpul'
@@ -74,10 +73,10 @@ module.exports = (app) ->
             doc.info['Title'] = 'Test'
             doc.info['Author'] = "Alan Watts - with re-store-order"
 
-            doc.text 'Order' + order.order_num
+            doc.text 'Order :: ' + order.order_num
             doc.down
-            doc.text " "
-            doc.text " "
+            doc.text "Account: " + order.client.acc
+            doc.text order.client.name
             doc.text " "
 
             for item in order.items
@@ -87,7 +86,7 @@ module.exports = (app) ->
                 doc.text " "
                 doc.text " "
                 doc.text " "
-                doc.text "         " + order.total
+            doc.text "Total: " + order.total
             doc.write path, (err) ->
 
                
@@ -103,3 +102,4 @@ module.exports = (app) ->
 
         app.get '/order/previous', (req, res) ->
             res.render 'order/previous' 
+

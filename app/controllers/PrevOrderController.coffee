@@ -16,3 +16,8 @@ module.exports = (app) ->
                 console.log orders
                 res.send orders
 
+
+        app.get '/order/previous/select/:num', (req, res) ->
+            OrderModel.findOne {order_num: req.params.num}, (err, val) ->
+                console.log val
+                res.send val

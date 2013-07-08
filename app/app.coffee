@@ -40,5 +40,5 @@ http.createServer(app).listen app.get('port'), ->
   port = app.get 'port'
   env = app.settings.env
   console.log "listening on port #{port} in #{env} mode"
-mongoose.connect 'mongodb://192.168.1.254/re-store-order'
+mongoose.connect 'mongodb://mooch.activedns.co.za/re-store-order'
 module.exports = app

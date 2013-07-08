@@ -8,7 +8,7 @@ block content
                 select(ng-options="client as client.name for client in clientList", ng-model="prevAcc", value="{{client.acc}}")
                    
                 p.acc Order:
-                select(ng-options="order as order.acc for order in orders", ng-model="prevOrder")
+                select(ng-options="order as order.order_num for order in ordersNums", ng-model="prevOrder", value="{{order.order_num}}")
 
 
             h2 Order :: {{order_num}}
