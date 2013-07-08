@@ -12,7 +12,8 @@
     "connect-assets": "~2.3.3",
     "dropbox": "*",
     "ya-csv": "*",
-    "pdfkit": "*"
+    "pdfkit": "*",
+    "mongoose": "*"
   },
   "devDependencies": {
     "node-dev": "~0.2.8",
