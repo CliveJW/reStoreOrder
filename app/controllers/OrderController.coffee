@@ -76,7 +76,7 @@ module.exports = (app) ->
             curr_month = d.getMonth() + 1 #Months are zero based
             curr_year = d.getFullYear()
             doc = new PDFDocument
-            doc.fontSize(24)
+            doc.fontSize(20)
             doc.info['Title'] = 'Test'
             doc.info['Author'] = "Alan Watts - with re-store-order"
             doc.text 'Order: ' + order.order_num 
@@ -90,12 +90,12 @@ module.exports = (app) ->
             doc.text ""
 
             for item in order.items
-                doc.fontSize(14)
+                doc.fontSize(12)
                 doc.text item.name 
                 doc.text "      x " + item.count + " " + item.unit + "(s) with " + item.discount  + "% discount @ R" + item.price
                 doc.text " "
             doc.text " "
-            doc.fontSize(24)
+            doc.fontSize(20)
             doc.text "Total: " + order.total
             doc.write path, (err) ->
 
