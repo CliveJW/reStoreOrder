@@ -1,24 +1,21 @@
 body {
-	background: url(../img/grad_1.jpg); 
+	background-color: black; 
+	border-color: #00FF00;
 }
 
 .container {
-	width: 90%;
-	float: center;
+	width: 99%;
 }
 
-.btn-primary {
-	margin-bottom: 10px;
-	margin-right: 5px;
-}
 
 h1 {
-	   -webkit-text-stroke: 1px white;
-	   color: red;
+	   -webkit-text-stroke: 1px #00FF00;
+	   color: black;
 }
 
 .well {
-	background-color: rgba(0, 0, 0, 0.5);
+	border-color: #51a351;
+	background-color: rgba(81, 163, 81, 0.1);
 }
 
 /*.line {
@@ -30,6 +27,7 @@ h1 {
 .productListItem {
 	/*background-color: white*/
 	color: white;
+	border-color: #00FF00;
 }
 
 .search, .sort {
@@ -54,7 +52,8 @@ h2 {
 }
 
 th {
-	color: white;
+	color: black;
+	background-color:#51a351;
 }
 
 td {
@@ -73,3 +72,18 @@ td {
   display: none;
 }
 
+hr {
+	border-color: #00FF00;
+}
+ .item {
+ 	border-color: #00FF00;
+ }
+
+ table, th, td
+{
+border: 1px solid #51a351;
+}
+
+.btn {
+	margin: 2px;
+}

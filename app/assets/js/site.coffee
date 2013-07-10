@@ -14,6 +14,20 @@ $ ->
             console.log $("#discountSet").val
             $scope.showSearch = null
             $scope.showOrderPanel = null
+
+            $.get(
+
+                    "/client/list"
+
+                ).success( 
+                    (data) ->
+                        $scope.clientList = data
+                        $scope.$apply()
+
+                ).error(
+                    (err) ->
+                        console.log err
+                )
             
             $scope.startOrder = ->
                 
@@ -26,30 +40,15 @@ $ ->
                             $scope.order = order
                             order.order_id = order._id
                             $scope.order_num = order.order_num
+                            $scope.showSearch = 'true'
+                            $scope.showOrderPanel = 'true'
+                            $scope.orderItems = []
                             $scope.$apply()
 
                     ).error(
 
                         (err) ->
                     )
-
-                $.get(
-
-                    "/client/list"
-
-                ).success( 
-                    (data) ->
-                        $scope.clientList = data
-                        $scope.showSearch = 'true'
-                        $scope.showOrderPanel = 'true'
-                        $scope.orderItems = []
-                        $scope.$apply()
-                ).error(
-                    (err) ->
-                        console.log err
-                )
-
-
 
 
             $scope.addItem = (item) ->

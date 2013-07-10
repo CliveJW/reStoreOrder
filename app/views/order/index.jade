@@ -5,10 +5,13 @@ block content
 
         .fluid-row
 
-            button.btn-primary(ng-click="startOrder()")
+            button.btn-success(ng-click="startOrder()")
+                i.icon-shopping-cart
                 | New
-            button.btn-primary(value="Page", href="/orders/previous/", onclick="location.href='/order/previous';")
+            button.btn-success(value="Page", href="/orders/previous/", onclick="location.href='/order/previous';")
+                i.icon-repeat
                 | Previous
+            P
 
             div.search.well
 
@@ -49,7 +52,9 @@ block content
                             td(data-title="Price") {{item.price}}
                 p.totalPrice Total Due: {{totalCost}}
                 button.btn-danger(ng-click="dropOrder()")
-                    | Complete Order
+                    span.ladda-label Submit
+
+
 
             #productUnitModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='productUnitModal', aria-hidden='true')
                 .modal-header
@@ -66,5 +71,5 @@ block content
                     p with Discount
                     input#discountSet(type="number", step="any", value="0", ng-model="discountModel")
                 .modal-footer
-                    button.btn(data-dismiss='modal', aria-hidden='true', ng-click="addItem(itemNumber)") Proceed
+                    button.bt(data-dismiss='modal', aria-hidden='true', ng-click="addItem(itemNumber)") Proceed
 
