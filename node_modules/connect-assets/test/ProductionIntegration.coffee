@@ -7,16 +7,16 @@ app.use assets buildDir: false  # disable saving built assets to file
 app.listen 3589
 
 exports['Far-future expires and MD5 hash strings are used for images'] = (test) ->
-  imgTag = "/img/foobar-d41d8cd98f00b204e9800998ecf8427e.png"
+  imgTag = "/img/foobar-25c2e8559281a2cd7503300442862885.png"
   test.equals img('foobar.png'), imgTag
-  request 'http://localhost:3589/img/foobar-d41d8cd98f00b204e9800998ecf8427e.png', (err, res, body) ->
+  request 'http://localhost:3589/img/foobar-25c2e8559281a2cd7503300442862885.png', (err, res, body) ->
     throw err if err
     test.equals res.headers['content-type'], 'image/png'
     test.equals res.headers['expires'], 'Wed, 01 Feb 2034 12:34:56 GMT'
     test.done()
 
 exports['Far-future expires and MD5 hash strings are used for CSS'] = (test) ->
-  cssTag = "<link rel='stylesheet' href='/css/style-666055206709fc94e56e1a59caa615dd.css'>"
+  cssTag = '<link rel="stylesheet" href="/css/style-666055206709fc94e56e1a59caa615dd.css" />'
   test.equals css('style'), cssTag
   test.equals assets.instance.buildFilenames['css/style.styl'], 'css/style-666055206709fc94e56e1a59caa615dd.css'
 
@@ -38,7 +38,7 @@ exports['Far-future expires and MD5 hash strings are used for CSS'] = (test) ->
       test.done()
 
 exports['JS dependencies are concatenated and minified'] = (test) ->
-  jsTag = "<script src='/js/dependent-057747a1cbabcbd2279e4f358bc4723f.js'></script>"
+  jsTag = '<script src="/js/dependent-057747a1cbabcbd2279e4f358bc4723f.js"></script>'
   test.equals js('dependent'), jsTag
   test.equals assets.instance.buildFilenames['js/dependent.coffee'], 'js/dependent-057747a1cbabcbd2279e4f358bc4723f.js'
 
